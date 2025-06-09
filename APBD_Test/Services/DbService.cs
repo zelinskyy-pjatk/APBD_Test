@@ -54,7 +54,7 @@ public class DbService : IDbService
         };
     }
 
-    public async Task AddPlayer(AddPlayerRequest request)
+    /*public async Task AddPlayer(AddPlayerRequest request)
     {
 
         var existingMatch = await _context.PlayerMatches.FirstOrDefault(m => m.MatchId == request.Matches.FirstOrDefault().MatchId);
@@ -69,5 +69,5 @@ public class DbService : IDbService
         }
         _context.Players.Add();
         await _context.SaveChangesAsync();
-    }
+    }*/
 }
