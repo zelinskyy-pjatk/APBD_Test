@@ -15,7 +15,7 @@ public class DatabaseContext : DbContext
     {
     }
 
-    protected DatabaseContext(DbContextOptions options) : base(options)
+    public DatabaseContext(DbContextOptions options) : base(options)
     {
     }
 
@@ -141,5 +141,7 @@ public class DatabaseContext : DbContext
                 Rating = 1.77
             }
         });
+
+        
     }
 }
