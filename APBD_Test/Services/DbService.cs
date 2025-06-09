@@ -54,20 +54,40 @@ public class DbService : IDbService
         };
     }
 
-    /*public async Task AddPlayer(AddPlayerRequest request)
+    public async Task AddPlayer(AddPlayerRequest request)
     {
+        var existingMatch = await _context.PlayerMatches.FirstOrDefaultAsync(m => m.MatchId == request.Matches.FirstOrDefault().MatchId);
+        if (existingMatch == null)
+            throw new ArgumentException("Match with given ID does not exist");
 
-        var existingMatch = await _context.PlayerMatches.FirstOrDefault(m => m.MatchId == request.Matches.FirstOrDefault().MatchId);
-        if (existingMatch != null) throw new ArgumentException("Match already exists");
-        var existingPlayer = await _context.Players.FirstOrDefaultAsync(p => p.FirstName == request.FirstName && p.LastName == request.LastName && p.BirthDate == request.BirthDate);
+        var existingPlayer = await _context.Players.FirstOrDefaultAsync(
+            p => p.FirstName == request.FirstName && 
+            p.LastName == request.LastName && 
+            p.BirthDate == request.BirthDate);
+    
         if (existingPlayer != null)
         {
-            foreach (MatchRequestDto match in request.Matches)
+            foreach (var match in request.Matches)
             {
-                if (match.PlayerMatchDto.Rating > request.Matches.Select)
+                var existingPlayerMatch = await _context.PlayerMatches.FirstOrDefaultAsync(pm => pm.PlayerId == existingPlayer.PlayerId &&
+                    pm.MatchId == match.MatchId);
+            
+                if (existingPlayerMatch != null && match.PlayerMatchDto.Rating > existingPlayerMatch.Rating)
+                {
+                    existingPlayerMatch.Rating = match.PlayerMatchDto.Rating;
+                }
             }
         }
-        _context.Players.Add();
+        else
+        {
+            _context.Players.Add(new Player 
+            { 
+                FirstName = request.FirstName, 
+                LastName = request.LastName, 
+                BirthDate = request.BirthDate 
+            });
+        }
+    
         await _context.SaveChangesAsync();
-    }*/
+    }
 }
