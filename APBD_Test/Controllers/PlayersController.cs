@@ -22,7 +22,7 @@ public class PlayersController : ControllerBase
         return Ok(result);
     }
 
-    [HttpPost]
+    /*[HttpPost]
     public async Task<IActionResult> AddPlayer([FromBody] AddPlayerRequest playerRequest)
     {
         try
@@ -34,5 +34,5 @@ public class PlayersController : ControllerBase
         {
             return BadRequest(e.Message);
         }
-    }
+    }*/
 }
